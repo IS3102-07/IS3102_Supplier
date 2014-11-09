@@ -40,7 +40,7 @@
                 %>
                 <table class="table table-striped">
 
-                    <%      if (purchaseOrderList.size()==0) {
+                    <%      if (purchaseOrderList.size() == 0) {
                             out.println("There is no purchase order submitted from Island Furniture");
                         } else if (purchaseOrderList != null) {
                             for (PurchaseOrderHelper po : purchaseOrderList) {
@@ -57,6 +57,8 @@
                             <td><%= po.getAddress()%></td>
                             <td>
                                 <a href="../servlet/rejectPurchaseOrder?poId=<%= po.getId()%>"><span class="btn btn-primary">Reject</span></a>
+                                <a href="../servlet/shipPurchaseOrder?poId=<%= po.getId()%>"><span class="btn btn-primary">Ship</span></a>
+
                             </td>
                         </tr>
                     </tbody>

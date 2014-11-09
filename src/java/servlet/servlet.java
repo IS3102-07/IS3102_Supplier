@@ -13,15 +13,14 @@ import javax.xml.ws.WebServiceRef;
 import wsClient.PurchaseOrderHelper;
 import wsClient.RetailProductsAndRawMaterialsPurchasingWebService_Service;
 
-
 /**
  *
  * @author Baoyu
  */
 public class servlet extends HttpServlet {
+
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/RetailProductsAndRawMaterialsPurchasingWebService/RetailProductsAndRawMaterialsPurchasingWebService.wsdl")
     private RetailProductsAndRawMaterialsPurchasingWebService_Service service;
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,15 +38,21 @@ public class servlet extends HttpServlet {
             case "/getPurchaseOrder":
                 List<PurchaseOrderHelper> purchaseOrderList = this.getPurchaseOrder("supplier1@email.com", "Supplier 1");
                 System.out.println("purchaseOrderList.size(): " + purchaseOrderList.size());
-                request.setAttribute("purchaseOrderList", purchaseOrderList);                
+                request.setAttribute("purchaseOrderList", purchaseOrderList);
                 break;
-                
+
             case "/rejectPurchaseOrder":
                 Long poId = Long.parseLong(request.getParameter("poId"));
-                this.rejectPurchaseOrder("supplier1@email.com", "Supplier 1", poId);                
+                this.rejectPurchaseOrder("supplier1@email.com", "Supplier 1", poId);
                 nextPage = "/servlet/getPurchaseOrder";
                 break;
-                
+
+            case "/shipPurchaseOrder":
+                Long poId1 = Long.parseLong(request.getParameter("poId"));
+                this.shipPurchaseOrder("supplier1@email.com", "Supplier 1", poId1);
+                nextPage = "/servlet/getPurchaseOrder";
+                break;
+
         }
         dispatcher = servletContext.getRequestDispatcher(nextPage);
         dispatcher.forward(request, response);
@@ -107,6 +112,11 @@ public class servlet extends HttpServlet {
         return port.rejectPurchaseOrder(email, password, purchaseOrderId);
     }
 
-
+    private Boolean shipPurchaseOrder(java.lang.String email, java.lang.String password, java.lang.Long purchaseOrderId) {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        wsClient.RetailProductsAndRawMaterialsPurchasingWebService port = service.getRetailProductsAndRawMaterialsPurchasingWebServicePort();
+        return port.shipPurchaseOrder(email, password, purchaseOrderId);
+    }
 
 }
