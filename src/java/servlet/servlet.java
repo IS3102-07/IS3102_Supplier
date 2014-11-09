@@ -45,6 +45,7 @@ public class servlet extends HttpServlet {
             case "/rejectPurchaseOrder":
                 Long poId = Long.parseLong(request.getParameter("poId"));
                 this.rejectPurchaseOrder("supplier1@email.com", "Supplier 1", poId);                
+                nextPage = "/servlet/getPurchaseOrder";
                 break;
                 
         }

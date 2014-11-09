@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h3>Purchase Orders received from Island Furniture</h3>
-                <a href="../Supplier/servlet/getPurchaseOrder"><strong><span class="btn btn-primary">Refresh</span></strong></a>                                          
+                <a href="../servlet/getPurchaseOrder"><strong><span class="btn btn-primary">Refresh</span></strong></a>                                          
             </div>
             <div class="col-md-12">                    
                 <%
@@ -40,7 +40,9 @@
                 %>
                 <table class="table table-striped">
 
-                    <%                                if (purchaseOrderList != null) {
+                    <%      if (purchaseOrderList.size()==0) {
+                            out.println("There is no purchase order submitted from Island Furniture");
+                        } else if (purchaseOrderList != null) {
                             for (PurchaseOrderHelper po : purchaseOrderList) {
                     %>
                     <thead>
@@ -61,7 +63,6 @@
                     <tr>
                         <td colspan="6">
                             <table class="table table-bordered">
-                                <% for (LineItemHelper lineItem : po.getLineItemHelpers()) {%>
                                 <thead>
                                     <tr>
                                         <th style="width: 10%;">SKU</th>
@@ -69,6 +70,8 @@
                                         <th style="width: 12%;">Quantity</th>
                                     </tr>
                                 </thead>
+                                <% for (LineItemHelper lineItem : po.getLineItemHelpers()) {%>
+
                                 <tbody>
                                     <tr>
                                         <td><%= lineItem.getSKU()%></td>
