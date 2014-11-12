@@ -36,20 +36,20 @@ public class servlet extends HttpServlet {
         switch (target) {
 
             case "/getPurchaseOrder":
-                List<PurchaseOrderHelper> purchaseOrderList = this.getPurchaseOrder("supplier1@email.com", "Supplier 1");
+                List<PurchaseOrderHelper> purchaseOrderList = this.getPurchaseOrder("contact@chevronphilips.com", "Chevron Phillips Chemicals Asia Pte Ltd");
                 System.out.println("purchaseOrderList.size(): " + purchaseOrderList.size());
                 request.setAttribute("purchaseOrderList", purchaseOrderList);
                 break;
 
             case "/rejectPurchaseOrder":
                 Long poId = Long.parseLong(request.getParameter("poId"));
-                this.rejectPurchaseOrder("supplier1@email.com", "Supplier 1", poId);
+                this.rejectPurchaseOrder("contact@chevronphilips.com", "Chevron Phillips Chemicals Asia Pte Ltd", poId);
                 nextPage = "/servlet/getPurchaseOrder";
                 break;
 
             case "/shipPurchaseOrder":
                 Long poId1 = Long.parseLong(request.getParameter("poId"));
-                this.shipPurchaseOrder("supplier1@email.com", "Supplier 1", poId1);
+                this.shipPurchaseOrder("contact@chevronphilips.com", "Chevron Phillips Chemicals Asia Pte Ltd", poId1);
                 nextPage = "/servlet/getPurchaseOrder";
                 break;
 
